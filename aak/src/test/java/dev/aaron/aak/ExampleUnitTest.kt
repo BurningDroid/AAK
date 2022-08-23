@@ -1,4 +1,4 @@
-package dev.aaron.aae
+package dev.aaron.aak
 
 import org.junit.Test
 
