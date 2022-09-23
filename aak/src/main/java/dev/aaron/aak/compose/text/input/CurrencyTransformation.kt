@@ -7,9 +7,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import dev.aaron.aak.number.toSafeDouble
 import java.text.DecimalFormat
 
-private val decimalFormat: DecimalFormat by lazy { DecimalFormat() }
+object CurrencyTransformation : VisualTransformation {
 
-class CurrencyTransformation : VisualTransformation {
+    private val decimalFormat: DecimalFormat by lazy { DecimalFormat() }
+
     override fun filter(text: AnnotatedString): TransformedText {
         return TransformedText(
             text = AnnotatedString(text.text.toCurrencyFormat()),
@@ -24,9 +25,9 @@ class CurrencyTransformation : VisualTransformation {
             }
         )
     }
-}
 
-private fun String.toCurrencyFormat(): String {
-    val newText = decimalFormat.format(this.toSafeDouble())
-    return if (this.endsWith(".")) "$newText." else newText
+    private fun String.toCurrencyFormat(): String {
+        val newText = decimalFormat.format(this.toSafeDouble())
+        return if (this.endsWith(".")) "$newText." else newText
+    }
 }
