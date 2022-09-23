@@ -27,7 +27,15 @@ object CurrencyTransformation : VisualTransformation {
     }
 
     private fun String.toCurrencyFormat(): String {
-        val newText = decimalFormat.format(this.toSafeDouble())
-        return if (this.endsWith(".")) "$newText." else newText
+        val numOfPoint = this.count { it == '.' }
+        return if(this.endsWith(".") && numOfPoint > 1) {
+            this.substringBeforeLast(".")
+        } else {
+            this
+        }.let {
+            decimalFormat.format(it.toSafeDouble())
+        }.let {
+            if (numOfPoint == 1 && this.endsWith(".")) "$it." else it
+        }
     }
 }
