@@ -1,7 +1,10 @@
 package dev.aaron.aak.number
 
+import java.text.DecimalFormat
 import kotlin.math.pow
 import kotlin.math.round
+
+private val decimalFormat: DecimalFormat by lazy { DecimalFormat() }
 
 fun String?.toSafeInt(default: Int = 0) = this?.trim()?.toIntOrNull() ?: default
 
@@ -17,4 +20,16 @@ fun Double.round(digit: Int = 2): Double {
 fun Float.round(digit: Int = 2): Float {
     val v = 10F.pow(digit)
     return round(this * v) / v
+}
+
+fun Number?.toDollar(
+    prefix: String = "$",
+    default: String = "-",
+    digit: Int = 2
+): String {
+    return if (this == null) {
+        default
+    } else {
+        "${prefix}${decimalFormat.format(this.toFloat().round(digit))}"
+    }
 }
