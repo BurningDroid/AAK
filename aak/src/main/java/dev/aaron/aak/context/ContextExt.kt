@@ -1,5 +1,6 @@
 package dev.aaron.aak.context
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -48,4 +49,19 @@ fun Context.goPlayStore(packageName: String) {
 fun Context.goLink(url: String) {
     val urlText = if (URLUtil.isNetworkUrl(url)) url else "https://$url"
     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlText)))
+}
+
+fun Context.sendEmail(
+    emailAddress: String,
+    subject: String,
+    body: String
+) {
+    try {
+        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:$emailAddress?subject=$subject&body=${body}")
+        }
+        startActivity(emailIntent)
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+    }
 }
