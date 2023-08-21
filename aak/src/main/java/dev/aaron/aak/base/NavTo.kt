@@ -1,3 +1,3 @@
 package dev.aaron.aak.base
 
-sealed class NavTo
+sealed interface NavTo
