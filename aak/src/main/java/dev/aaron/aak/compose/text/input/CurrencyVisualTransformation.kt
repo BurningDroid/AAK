@@ -11,7 +11,7 @@ object CurrencyVisualTransformation: VisualTransformation {
     private val decimalFormat: DecimalFormat = DecimalFormat("#,###")
 
     override fun filter(text: AnnotatedString): TransformedText {
-        val originText = text.text
+        val originText = text.text.trim()
         if (originText.isBlank()) {
             return TransformedText(text, OffsetMapping.Identity)
         }
